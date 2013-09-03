@@ -564,7 +564,7 @@ public class WheelView extends View {
 			}
 		}
 
-		setMeasuredDimension(200, height);
+		setMeasuredDimension(100, height);
 	}
 
 	@Override
@@ -617,6 +617,7 @@ public class WheelView extends View {
 		Log.d(TAG, "buildViewForMeasuring	currentItem=" + currentItem
 				+ ",addItems=" + addItems);
 		for (int i = currentItem + addItems; i >= currentItem - addItems; i--) {
+			Log.d(TAG, "-----i'm delemiter----");
 			Log.d(TAG, "buildViewForMeasuring	for loop i=" + i);
 			if (addViewItemToItemsLayout(i, true)) {
 				firstItem = i;
@@ -716,7 +717,7 @@ public class WheelView extends View {
 		Log.d(TAG, "drawItems	currentItem=" + currentItem + ",firstItem="
 				+ firstItem + ",getItemWidth=" + getItemWidth() + ",getWidth="
 				+ getWidth() + ",scrollingOffset=" + scrollingOffset
-				+ ",padding" + "=" + padding);
+				+ ",padding" + "=" + padding+",itemsLayout.getChildCount()="+itemsLayout.getChildCount());
 		canvas.save();
 
 		// int top = (currentItem - firstItem) * getItemHeight() +
