@@ -914,7 +914,6 @@ public class WheelView extends View {
 			// process empty items above the first or below the second
 			int emptyItems = scrollingOffset / getItemWidth();
 			Log.d(SCR, "getItemsRange	emptyItems:" + emptyItems);
-			Log.d(SCR, "getItemsRange	first:" + first);
 			first -= emptyItems;
 			Log.d(SCR, "getItemsRange	first -= emptyItems:" + first);
 			double temp = Math.asin(emptyItems);
