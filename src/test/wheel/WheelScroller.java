@@ -193,7 +193,7 @@ public class WheelScroller {
     // animation handler
     private Handler animationHandler = new Handler() {
         public void handleMessage(Message msg) {
-        	//Log.d("scr", "handleMessage");
+        	Log.d(TAG, "animationHandler handleMessage");
             scroller.computeScrollOffset();
             int currX = scroller.getCurrX();
             int delta = lastScrollX - currX;
