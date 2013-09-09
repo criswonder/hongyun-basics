@@ -8,6 +8,7 @@ import android.provider.Contacts.People;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewParent;
+import android.webkit.CookieManager;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListAdapter;
@@ -28,7 +29,9 @@ public class TestHarness extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		testTaoSearchListActivityFloatingTopbar();
+//		testTaoSearchListActivityFloatingTopbar();
+		
+//		String cookie = CookieManager.getInstance().getCookie(url);
 	}
 
 	private void testTaoSearchListActivityFloatingTopbar() {
