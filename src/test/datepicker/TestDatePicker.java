@@ -5,6 +5,7 @@ import java.util.Calendar;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.pm.PackageManager;
 import android.util.Log;
 import android.widget.DatePicker;
 
@@ -45,5 +46,10 @@ public class TestDatePicker extends Activity {
     	// TODO Auto-generated method stub
     	super.onResume();
     	showDialog(1);
+    	
+    	 int result = getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)
+			&& getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_AUTOFOCUS) ? 1
+			: 0;
+    	 System.out.println(result);
     }
 }
