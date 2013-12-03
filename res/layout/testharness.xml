@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" 
-    android:gravity="center">
-	<ListView 
-	    android:id="@android:id/list"
-	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent"
-	    android:layout_marginBottom="56dp"
-	    ></ListView>
-	<Button 
-	    android:id="@+id/btn_run"
-	    android:layout_width="fill_parent"
-	    android:layout_height="56dp"
-	    android:layout_alignParentBottom="true"
-		android:text="run"
-	    />
-</RelativeLayout>
+    android:layout_height="match_parent"
+	android:orientation="vertical"    
+    >
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+         >
+    </ListView>
+
+    <Button
+        android:id="@+id/btn_run"
+        android:layout_width="fill_parent"
+        android:layout_height="56dp"
+        android:layout_weight="0.01"
+        android:text="run" />
+
+</LinearLayout>

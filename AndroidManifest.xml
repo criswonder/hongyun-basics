@@ -27,62 +27,65 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="test.animation.TestAnimation"
-            android:label="test_animation" >
+            android:name="test.tao.harness.TestHarness"
+            android:label="TestHarness" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.SAMPLE_CODE1" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="test.animation.TestAnimation1"
-            android:label="test_animation" >
+        
+        <!-- ===========================================测试animation方法============================================= -->
+<!--         <activity -->
+<!--             android:name="test.animation.TestAnimation" -->
+<!--             android:label="test_animation" > -->
+<!--             <intent-filter> -->
+<!--                 <action android:name="android.intent.action.MAIN" /> -->
 
-            <!--
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!--                 <category android:name="android.intent.category.SAMPLE_CODE1" /> -->
+<!--             </intent-filter> -->
+<!--         </activity> -->
+<!--         <activity -->
+<!--             android:name="test.animation.TestAnimation1" -->
+<!--             android:label="test_animation" > -->
+<!--         </activity> -->
+<!--         <activity -->
+<!--             android:name="test.animation.TestAnimation2" -->
+<!--             android:label="test_animation" > -->
+<!--             <intent-filter> -->
+<!--                 <action android:name="android.intent.action.MAIN" /> -->
 
-                <category android:name="android.intent.category.SAMPLE_CODE1" />
-            </intent-filter>
-            -->
-        </activity>
-        <activity
-            android:name="test.animation.TestAnimation2"
-            android:label="test_animation" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!--                 <category android:name="android.intent.category.SAMPLE_CODE1" /> -->
+<!--             </intent-filter> -->
+<!--         </activity> -->
+<!--         <activity -->
+<!--             android:name="test.animation.TestTranslateAnimation" -->
+<!--             android:label="test_animation" > -->
+<!--             <intent-filter> -->
+<!--                 <action android:name="android.intent.action.MAIN" /> -->
 
-                <category android:name="android.intent.category.SAMPLE_CODE1" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="test.animation.TestTranslateAnimation"
-            android:label="test_animation" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!--                 <category android:name="android.intent.category.SAMPLE_CODE1" /> -->
+<!--             </intent-filter> -->
+<!--         </activity> -->
+<!--         <activity -->
+<!--             android:name="test.animation.TestAnimation3" -->
+<!--             android:label="test_animation" > -->
+<!--             <intent-filter> -->
+<!--                 <action android:name="android.intent.action.MAIN" /> -->
 
-                <category android:name="android.intent.category.SAMPLE_CODE1" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="test.animation.TestAnimation3"
-            android:label="test_animation" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!--                 <category android:name="android.intent.category.SAMPLE_CODE1" /> -->
+<!--             </intent-filter> -->
+<!--         </activity> -->
+<!--         <activity -->
+<!--             android:name="test.animation.TestAnimation4" -->
+<!--             android:label="test_animation" > -->
+<!--             <intent-filter> -->
+<!--                 <action android:name="android.intent.action.MAIN" /> -->
 
-                <category android:name="android.intent.category.SAMPLE_CODE1" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="test.animation.TestAnimation4"
-            android:label="test_animation" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.SAMPLE_CODE1" />
-            </intent-filter>
-        </activity>
+<!--                 <category android:name="android.intent.category.SAMPLE_CODE1" /> -->
+<!--             </intent-filter> -->
+<!--         </activity> -->
         <!-- ===========================================测试OnDraw方法============================================= -->
         <activity
             android:name="test.ondraw.TestSaveAndRestore"
@@ -255,15 +258,7 @@
                 <category android:name="android.intent.category.SAMPLE_CODE1" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="test.tao.harness.TestHarness"
-            android:label="TestHarness" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.SAMPLE_CODE1" />
-            </intent-filter>
-        </activity>
+        
         <activity
             android:name="test.tao.startactivity.TestStartActivityForResult"
             android:label="TestStartActivityForResult" >
