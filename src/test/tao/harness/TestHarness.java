@@ -142,6 +142,7 @@ public class TestHarness extends ListActivity {
 	public void testCookieManagerOnNullUrl() {
 		String cookie = CookieManager.getInstance().getCookie(null);
 		System.out.println(cookie);
+		Toast.makeText(getApplicationContext(), "fuckkkk", Toast.LENGTH_SHORT).show();
 	}
 
 	public void testTaoSearchListActivityFloatingTopbar() {
@@ -255,4 +256,8 @@ public class TestHarness extends ListActivity {
 		mImagePoolBinder.setImageDrawable(url, image);
 	}
 
+	public void testSystemProperty(){
+		String str = System.getProperty("http.agent");
+		System.out.println(str);
+	}
 }
