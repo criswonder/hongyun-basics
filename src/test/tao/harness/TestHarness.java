@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.zip.Adler32;
 
 import android.app.ListActivity;
 import android.database.Cursor;
@@ -259,5 +260,57 @@ public class TestHarness extends ListActivity {
 	public void testSystemProperty(){
 		String str = System.getProperty("http.agent");
 		System.out.println(str);
+	}
+	public void testLoadSoFromAsserts(){
+		SOManager soMgr = new SOManager(getApplicationContext());
+		soMgr.loadInetSo();
+		
+		try {
+			InputStream in=  getAssets().open("so/armeabi/libBSPatch.so");
+			if(in.available()>0){
+				byte[] data = new byte[in.available()];
+				in.read(data);
+				Adler32 a32 = new Adler32();
+				a32.update(data);
+				
+				Log.e(TAG, ""+a32.getValue());
+			}
+			
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			InputStream in=  getAssets().open("so/v7a/libBSPatch.so");
+			if(in.available()>0){
+				byte[] data = new byte[in.available()];
+				in.read(data);
+				Adler32 a32 = new Adler32();
+				a32.update(data);
+				
+				Log.e(TAG, ""+a32.getValue());
+			}
+			
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			InputStream in=  getAssets().open("so/x86/libBSPatch.so");
+			if(in.available()>0){
+				byte[] data = new byte[in.available()];
+				in.read(data);
+				Adler32 a32 = new Adler32();
+				a32.update(data);
+				
+				Log.e(TAG, ""+a32.getValue());
+			}
+			
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
