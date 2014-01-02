@@ -11,12 +11,14 @@ import java.util.ArrayList;
 import java.util.zip.Adler32;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.Contacts.People;
-import android.taobao.common.TaoToolBox;
+import android.provider.ContactsContract;
 import android.taobao.imagebinder.ImageBinder;
 import android.taobao.imagebinder.ImagePoolBinder;
 import android.util.Log;
@@ -55,6 +57,7 @@ public class TestHarness extends ListActivity {
 			"Television", "Thriller" };
 	private static final String TEST_PREFIX = "test";
 	private ArrayList<String> mMethodNames = new ArrayList<String>();
+	private final int REQUEST_CODE_CONTACTS = 12;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -143,7 +146,8 @@ public class TestHarness extends ListActivity {
 	public void testCookieManagerOnNullUrl() {
 		String cookie = CookieManager.getInstance().getCookie(null);
 		System.out.println(cookie);
-		Toast.makeText(getApplicationContext(), "fuckkkk", Toast.LENGTH_SHORT).show();
+		Toast.makeText(getApplicationContext(), "fuckkkk", Toast.LENGTH_SHORT)
+				.show();
 	}
 
 	public void testTaoSearchListActivityFloatingTopbar() {
@@ -245,72 +249,132 @@ public class TestHarness extends ListActivity {
 		}
 
 	}
-	
-	public void testImageBinder(){
+
+	public void testImageBinder() {
 		mMainViewGroup.removeAllViews();
 		ImageView image = new ImageView(this);
 		mMainViewGroup.addView(image);
-		
-		ImageBinder mImagePoolBinder = new ImagePoolBinder(this.getClass().getName(), getApplication(), ImageGroup.PRIORITY_NORMAL,
+
+		ImageBinder mImagePoolBinder = new ImagePoolBinder(this.getClass()
+				.getName(), getApplication(), ImageGroup.PRIORITY_NORMAL,
 				ImageCache.CACHE_CATEGORY_MRU);
 		String url = "http://gw.alicdn.com/bao/uploaded/i4/17994026573597533/T1QU5oFldcXXXXXXXX_!!0-item_pic.jpg_90x90q90.jpg";
 		mImagePoolBinder.setImageDrawable(url, image);
 	}
 
-	public void testSystemProperty(){
+	public void testSystemProperty() {
 		String str = System.getProperty("http.agent");
 		System.out.println(str);
 	}
-	public void testLoadSoFromAsserts(){
+
+	public void testGetPhoneContact() {
+		Intent intent = new Intent(Intent.ACTION_PICK,
+				ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
+
+		startActivityForResult(intent, REQUEST_CODE_CONTACTS);
+	}
+
+	public void testLoadSoFromAsserts() {
 		SOManager soMgr = new SOManager(getApplicationContext());
 		soMgr.loadInetSo();
-		
+
 		try {
-			InputStream in=  getAssets().open("so/armeabi/libBSPatch.so");
-			if(in.available()>0){
+			InputStream in = getAssets().open("so/armeabi/libBSPatch.so");
+			if (in.available() > 0) {
 				byte[] data = new byte[in.available()];
 				in.read(data);
 				Adler32 a32 = new Adler32();
 				a32.update(data);
-				
-				Log.e(TAG, ""+a32.getValue());
+
+				Log.e(TAG, "" + a32.getValue());
 			}
-			
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		try {
-			InputStream in=  getAssets().open("so/v7a/libBSPatch.so");
-			if(in.available()>0){
+			InputStream in = getAssets().open("so/v7a/libBSPatch.so");
+			if (in.available() > 0) {
 				byte[] data = new byte[in.available()];
 				in.read(data);
 				Adler32 a32 = new Adler32();
 				a32.update(data);
-				
-				Log.e(TAG, ""+a32.getValue());
+
+				Log.e(TAG, "" + a32.getValue());
 			}
-			
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		try {
-			InputStream in=  getAssets().open("so/x86/libBSPatch.so");
-			if(in.available()>0){
+			InputStream in = getAssets().open("so/x86/libBSPatch.so");
+			if (in.available() > 0) {
 				byte[] data = new byte[in.available()];
 				in.read(data);
 				Adler32 a32 = new Adler32();
 				a32.update(data);
-				
-				Log.e(TAG, ""+a32.getValue());
+
+				Log.e(TAG, "" + a32.getValue());
 			}
-			
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		switch (requestCode) {
+		case REQUEST_CODE_CONTACTS:
+			if (data != null) {
+				Cursor c = null;
+				Log.e("andymao", "data != null");
+				try {
+					Uri contactData = data.getData();
+					c = getContentResolver().query(contactData, null, null,
+							null, null);
+			        // 没有通讯录权限可能导致某些机型获取联系人异常，catch一下
+					 if (c != null && c.moveToFirst()) {
+						 try {
+					            int nameIndex = c
+					                    .getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
+					            int numberIndex = c
+					                    .getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+
+					            String name = c.getString(nameIndex);
+					            String number = c.getString(numberIndex);
+					            ;
+					            Log.e("andymao", name+":"+number);
+
+					        } catch (Exception e) {
+					            e.printStackTrace();
+					        }
+                     }else{
+                     	Log.e("andymao", "!!!!!!!!!!!!!c != null && c.moveToFirst()");
+                     }
+			        
+
+				} catch (SecurityException e) {
+					Log.e("andymao", "SecurityException");
+					e.printStackTrace();
+				} catch (Exception e) {
+					Log.e("andymao", "Exception");
+					e.printStackTrace();
+				} finally {
+					if (c != null) {
+						c.close();
+					}
+				}
+			} else {
+				Log.e("andymao", "data is nulll Exception");
+			}
+			break;
+
+		default:
+			break;
 		}
 	}
 }
