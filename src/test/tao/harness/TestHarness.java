@@ -28,6 +28,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.webkit.CookieManager;
+import android.webkit.WebView;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ArrayAdapter;
@@ -272,6 +273,15 @@ public class TestHarness extends ListActivity {
 				ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
 
 		startActivityForResult(intent, REQUEST_CODE_CONTACTS);
+	}
+	public void testWebViewJumpToTaobao() {
+		WebView web = new WebView(this);
+		String url = "taobao://m.taobao.com/?point=%7B%22from%22%3A%22h5%22%2C%22url%22%3A%22http%253A%252F%252Fm.taobao.com%252F%22%2C%22h5_uid%22%3A%22j%2BlbC%2FS8zkgCAdIWThqNrd8Q%22%2C%22ap_uri%22%3A%22click_sb_v1_manual%22%7D";
+		web.loadUrl(url);
+		
+		Intent intent = new Intent();
+		intent.setData(Uri.parse(url));
+		startActivity(intent);
 	}
 
 	public void testLoadSoFromAsserts() {
