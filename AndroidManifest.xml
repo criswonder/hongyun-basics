@@ -6,8 +6,10 @@
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_REMOVED" />
 
     <uses-sdk
         android:minSdkVersion="7"
@@ -15,6 +17,7 @@
 
     <application
         android:icon="@drawable/ic_launcher"
+        android:name=".MyApplication"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
@@ -305,7 +308,9 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name="test.broadcastreceiver.BootReceiver" >
+        <receiver android:name="test.broadcastreceiver.BootReceiver"
+            android:enabled="false"
+             >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" >
                 </action>
@@ -317,6 +322,24 @@
             <intent-filter>
                 <action android:name="fuck.fuck.ffff" >
                 </action>
+            </intent-filter>
+        </receiver>
+         <receiver android:enabled="true" android:label="w_hongyun" android:name="com.example.hongyunbasic.WidgetMy">
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/weitao_appwidget">
+            </meta-data>
+
+            <intent-filter>
+                <action android:name="com.taobao.action.widget.click.page.next" />
+                <action android:name="com.taobao.action.widget.click.page.pre" />
+                <action android:name="com.taobao.action.widget.click.refresh" />
+                <action android:name="com.taobao.action.widget.click.refresh.page" />
+                <action android:name="com.taobao.action.widget.click.refresh.image" />
+                <action android:name="com.taobao.action.widget.click.weitao" />
+                <action android:name="com.taobao.action.widget.click.empty" />
+                <action android:name="com.taobao.action.widget.account.login" />
+                <action android:name="com.taobao.action.widget.account.logout" />
+                <action android:name="com.taobao.atlas.action.DEXFILE_LOADED" />
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
         </receiver>
     </application>

@@ -8,14 +8,26 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
 import java.util.zip.Adler32;
 
 import android.app.ListActivity;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
 import android.graphics.Rect;
 import android.net.Uri;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.os.StrictMode;
 import android.provider.Contacts.People;
 import android.provider.ContactsContract;
@@ -141,6 +153,60 @@ public class TestHarness extends ListActivity {
 		} catch (NoSuchMethodException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		switch (requestCode) {
+		case REQUEST_CODE_CONTACTS:
+			if (data != null) {
+				Cursor c = null;
+				Log.e("andymao", "data != null");
+				try {
+					Uri contactData = data.getData();
+					c = getContentResolver().query(contactData, null, null,
+							null, null);
+					// 没有通讯录权限可能导致某些机型获取联系人异常，catch一下
+					if (c != null && c.moveToFirst()) {
+						try {
+							int nameIndex = c
+									.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
+							int numberIndex = c
+									.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+
+							String name = c.getString(nameIndex);
+							String number = c.getString(numberIndex);
+							;
+							Log.e("andymao", name + ":" + number);
+
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					} else {
+						Log.e("andymao",
+								"!!!!!!!!!!!!!c != null && c.moveToFirst()");
+					}
+
+				} catch (SecurityException e) {
+					Log.e("andymao", "SecurityException");
+					e.printStackTrace();
+				} catch (Exception e) {
+					Log.e("andymao", "Exception");
+					e.printStackTrace();
+				} finally {
+					if (c != null) {
+						c.close();
+					}
+				}
+			} else {
+				Log.e("andymao", "data is nulll Exception");
+			}
+			break;
+
+		default:
+			break;
 		}
 	}
 
@@ -274,11 +340,12 @@ public class TestHarness extends ListActivity {
 
 		startActivityForResult(intent, REQUEST_CODE_CONTACTS);
 	}
+
 	public void testWebViewJumpToTaobao() {
 		WebView web = new WebView(this);
 		String url = "taobao://m.taobao.com/?point=%7B%22from%22%3A%22h5%22%2C%22url%22%3A%22http%253A%252F%252Fm.taobao.com%252F%22%2C%22h5_uid%22%3A%22j%2BlbC%2FS8zkgCAdIWThqNrd8Q%22%2C%22ap_uri%22%3A%22click_sb_v1_manual%22%7D";
 		web.loadUrl(url);
-		
+
 		Intent intent = new Intent();
 		intent.setData(Uri.parse(url));
 		startActivity(intent);
@@ -334,57 +401,169 @@ public class TestHarness extends ListActivity {
 		}
 	}
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		switch (requestCode) {
-		case REQUEST_CODE_CONTACTS:
-			if (data != null) {
-				Cursor c = null;
-				Log.e("andymao", "data != null");
+	public void testGetMACAddress() {
+		String macAddress = null;
+		WifiManager wifiMgr = (WifiManager) getApplicationContext()
+				.getSystemService(Context.WIFI_SERVICE);
+		WifiInfo info = (null == wifiMgr ? null : wifiMgr.getConnectionInfo());
+		if (null != info) {
+			macAddress = info.getMacAddress();
+		}
+		if (null != macAddress) {
+			macAddress = macAddress.replace(":", "");// mac地址把冒号符号去掉
+		}
+		System.out.println(macAddress);
+	}
+
+	/**
+	 * use handler
+	 */
+	public void testThreadCommunication() {
+		final MyThread t1 = new MyThread("fk_t1");
+		final MyThread t2 = new MyThread("fk_t2");
+		t1.runTask(new Runnable() {
+
+			@Override
+			public void run() {
 				try {
-					Uri contactData = data.getData();
-					c = getContentResolver().query(contactData, null, null,
-							null, null);
-			        // 没有通讯录权限可能导致某些机型获取联系人异常，catch一下
-					 if (c != null && c.moveToFirst()) {
-						 try {
-					            int nameIndex = c
-					                    .getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
-					            int numberIndex = c
-					                    .getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-
-					            String name = c.getString(nameIndex);
-					            String number = c.getString(numberIndex);
-					            ;
-					            Log.e("andymao", name+":"+number);
-
-					        } catch (Exception e) {
-					            e.printStackTrace();
-					        }
-                     }else{
-                     	Log.e("andymao", "!!!!!!!!!!!!!c != null && c.moveToFirst()");
-                     }
-			        
-
-				} catch (SecurityException e) {
-					Log.e("andymao", "SecurityException");
+					Thread.sleep(800);
+					Message msg = Message.obtain();
+					msg.obj = "Abc it it it!!";
+					t2.handler.sendMessage(msg);
+				} catch (InterruptedException e) {
 					e.printStackTrace();
-				} catch (Exception e) {
-					Log.e("andymao", "Exception");
-					e.printStackTrace();
-				} finally {
-					if (c != null) {
-						c.close();
-					}
 				}
-			} else {
-				Log.e("andymao", "data is nulll Exception");
 			}
-			break;
+		});
 
-		default:
-			break;
+		t2.runTask(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+					Thread.sleep(1800);
+					Message msg = Message.obtain();
+					msg.obj = "ABCDDDD it it it!!";
+					t1.handler.sendMessage(msg);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	class MyThread extends Thread {
+		Handler handler;
+
+		/**
+		 * 
+		 */
+		public MyThread(String tName) {
+			super(tName);
+			handler = new Handler(Looper.myLooper()) {
+				@Override
+				public void handleMessage(Message msg) {
+					super.handleMessage(msg);
+					System.out.println(this);
+					System.out.println(msg.obj);
+				}
+			};
+		}
+
+		public void runTask(Runnable r) {
+			r.run();
+			this.start();
+		}
+
+	}
+
+	public void testThreadCommunicationUseLock() {
+
+	}
+
+	public void testPackageInfo() {
+		try {
+			PackageInfo packageInfo = this.getPackageManager().getPackageInfo(
+					this.getPackageName(),
+					PackageManager.GET_ACTIVITIES
+							| PackageManager.GET_RECEIVERS
+							| PackageManager.GET_SERVICES
+							| PackageManager.GET_PROVIDERS
+							| PackageManager.GET_DISABLED_COMPONENTS);
+
+			System.out.println(packageInfo.receivers);
+			System.out.println(packageInfo.activities);
+			System.out.println(packageInfo.services);
+		} catch (NameNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
+	static class Player implements Runnable {
+
+		private CyclicBarrier cyclicBarrier;
+		private int id;
+
+		public Player(int id, CyclicBarrier cyclicBarrier) {
+			this.cyclicBarrier = cyclicBarrier;
+			this.id = id;
+		}
+
+		@Override
+		public void run() {
+			try {
+				System.out.println("玩家" + id + "正在玩第一关...");
+				cyclicBarrier.await();
+				System.out.println("玩家" + id + "进入第二关...");
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			} catch (BrokenBarrierException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public static void testCyclicBarrier() {
+		CyclicBarrier cyclicBarrier = new CyclicBarrier(4, new Runnable() {
+
+			@Override
+			public void run() {
+				System.out.println("所有玩家进入第二关！");
+			}
+		});
+
+		for (int i = 0; i < 4; i++) {
+			new Thread(new Player(i, cyclicBarrier)).start();
+		}
+	}
+	public void testSendPackageChangeAction() {
+		Intent i = new Intent(Intent.ACTION_PACKAGE_CHANGED);
+		sendBroadcast(i);
+		
+	}
+	
+	public void testEnableDisabaleComponent() {
+		try {
+			PackageInfo packageInfo = this.getPackageManager().getPackageInfo(
+					this.getPackageName(),
+					PackageManager.GET_ACTIVITIES
+							| PackageManager.GET_RECEIVERS
+							| PackageManager.GET_SERVICES
+							| PackageManager.GET_PROVIDERS
+							| PackageManager.GET_DISABLED_COMPONENTS);
+
+			System.out.println(packageInfo.receivers);
+			System.out.println(packageInfo.activities);
+			System.out.println(packageInfo.services);
+			
+			ComponentName componentName = new ComponentName(this.getPackageName(), "com.example.hongyunbasic.WidgetMy");
+            this.getPackageManager().setComponentEnabledSetting(componentName,
+                                                                   PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                                                                   PackageManager.DONT_KILL_APP);
+            
+            
+		} catch (NameNotFoundException e) {
+			e.printStackTrace();
 		}
 	}
 }
