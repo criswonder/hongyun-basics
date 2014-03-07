@@ -19,11 +19,26 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import java.util.Vector;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.zip.Adler32;
+
+import android.app.ListActivity;
+import android.content.Context;
+import android.content.SyncResult;
 import android.database.Cursor;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.graphics.Region.Op;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -39,6 +54,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.view.Window;
+import android.view.WindowManager;
 import android.webkit.CookieManager;
 import android.webkit.WebView;
 import android.widget.AbsListView;
@@ -55,6 +72,7 @@ import android.widget.Toast;
 import com.example.hongyunbasic.R;
 import com.taobao.tao.imagepool.ImageCache;
 import com.taobao.tao.imagepool.ImageGroup;
+import com.xixi.cache.DiskLruCache.Snapshot;
 
 public class TestHarness extends ListActivity {
 	ListView listView;
@@ -75,7 +93,12 @@ public class TestHarness extends ListActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+	    getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
+	                            WindowManager.LayoutParams.FLAG_FULLSCREEN);
+	    
 		setContentView(R.layout.testharness);
+		
 		mMainViewGroup = (ViewGroup) findViewById(R.id.main);
 		reflectionCallTestMethods();
 	}
@@ -351,7 +374,7 @@ public class TestHarness extends ListActivity {
 		startActivity(intent);
 	}
 
-	public void testLoadSoFromAsserts() {
+	public void testLoadSoFromAsserts(){
 		SOManager soMgr = new SOManager(getApplicationContext());
 		soMgr.loadInetSo();
 
@@ -415,6 +438,8 @@ public class TestHarness extends ListActivity {
 		System.out.println(macAddress);
 	}
 
+	//---------------------------------------------------------------------------
+	//---------------------------------------------------------------------------
 	/**
 	 * use handler
 	 */
@@ -476,10 +501,8 @@ public class TestHarness extends ListActivity {
 		}
 
 	}
-
-	public void testThreadCommunicationUseLock() {
-
-	}
+	//---------------------------------------------------------------------------
+	//---------------------------------------------------------------------------
 
 	public void testPackageInfo() {
 		try {
@@ -499,6 +522,9 @@ public class TestHarness extends ListActivity {
 		}
 	}
 
+	//---------------------------------------------------------------------------
+	//---------------------------------------------------------------------------
+	
 	static class Player implements Runnable {
 
 		private CyclicBarrier cyclicBarrier;
@@ -536,6 +562,11 @@ public class TestHarness extends ListActivity {
 			new Thread(new Player(i, cyclicBarrier)).start();
 		}
 	}
+	
+	//---------------------------------------------------------------------------
+	//---------------------------------------------------------------------------
+	
+	
 	public void testSendPackageChangeAction() {
 		Intent i = new Intent(Intent.ACTION_PACKAGE_CHANGED);
 		sendBroadcast(i);
@@ -565,5 +596,263 @@ public class TestHarness extends ListActivity {
 		} catch (NameNotFoundException e) {
 			e.printStackTrace();
 		}
+	}	
+	/**
+	 * 为了测试Region.OP的几个属性
+	 * http://developer.android.com/reference/android/graphics/Region.Op.html
+	 */
+	public void testDrawRegionOP(){
+		
+		setContentView(new CustomeView(getApplicationContext()));
 	}
+	class CustomeView extends View{
+
+		public CustomeView(Context context) {
+			super(context);
+		}
+		@Override
+		protected void onDraw(Canvas canvas) {
+			super.onDraw(canvas);
+			
+//			canvas.save();
+//			//canvas.clipRect(20, 20, 120, 120);
+//			canvas.clipRect(80, 80, 200, 200, Op.XOR);
+//			canvas.clipRect(210, 210, 480, 480, Op.XOR);
+//			canvas.drawColor(Color.RED);
+//			canvas.restore();
+			
+			Path p,p1;
+			p = new Path();
+			p.reset();
+			p.moveTo(210, 800);
+			p.quadTo(250, 750, 300, 730);
+			p.lineTo(350, 650);
+			p.lineTo(400, 630);
+			p.quadTo(430, 660,480,680);
+			p.lineTo(480, 800);
+			p.close();//close 会把你绘制的区域的缺口链接上
+//			
+			canvas.save();
+			Paint paint = new Paint();
+			paint.setAntiAlias(true);
+			paint.setColor(Color.GREEN);
+			canvas.drawPath(p, paint);
+			canvas.restore();
+			
+			p1 = new Path();
+			p1.reset();
+			p1.moveTo(210, 800);
+			p1.lineTo(480, 680);
+			p1.lineTo(480, 800);
+			p1.close();
+		
+			canvas.save();
+			canvas.clipPath(p);
+			canvas.clipPath(p1, Op.DIFFERENCE); //如果这样，则剩下的区域就是p-p1
+			paint = new Paint();
+			paint.setAntiAlias(true);
+			paint.setColor(Color.GRAY);
+			canvas.drawPath(p1,paint);//在p-p1区域里面绘制p1是没有效果的,p1已经不在画布上了
+			canvas.restore();
+			
+		}
+	}
+	
+	//---------------------------------------------------------------------------
+	//---------------------------------------------------------------------------
+	/**
+	 * 采用锁测试，线程间的通信
+	 * 使用CountdownLatch, 一个线程或多个线程等待其他线程运行达到某一目标后进行自己的下一步工作，
+	 * 而被等待的“其他线程”达到这个目标后继续自己下面的任务。
+	 */
+	public void testThreadCommunication2(){
+		final String TAG = "testThreadCommunication";
+		final CountDownLatch lock = new CountDownLatch(4);
+		final Vector<Integer> mResults = new Vector<Integer>();
+		Thread main = new Thread("the_main"){
+			@Override
+			public void run() {
+				super.run();
+//				synchronized (lock) {
+//					for(Integer obj:mResults){
+//						Log.d(TAG, "obj="+obj);
+//					}
+//				}
+				try {
+					lock.await();
+					for(Integer obj:mResults){
+						Log.d(TAG, "obj="+obj);
+					}
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+		};
+		main.start();
+		
+		Thread main1 = new Thread("the_main"){
+			@Override
+			public void run() {
+				super.run();
+//				synchronized (lock) {
+//					for(Integer obj:mResults){
+//						Log.d(TAG, "obj="+obj);
+//					}
+//				}
+				try {
+					lock.await();
+					for(Integer obj:mResults){
+						Log.d(TAG, "obj2="+obj);
+					}
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+		};
+		main1.start();
+		ExecutorService pool = Executors.newCachedThreadPool();
+		for( int i=0;i<4;i++){
+			pool.execute(new WorkThread(2000+i, lock,mResults));
+		}
+		
+	}
+	class WorkThread implements Runnable{
+		CountDownLatch lock;
+		Vector<Integer> r;
+		int test;
+		public WorkThread(int t,CountDownLatch l,Vector<Integer> result) {
+			this.test = t;
+			this.lock = l;
+			this.r = result;
+		}
+		@Override
+		public void run() {
+			int sum =0;
+			for(int i=0;i<test;i++){
+				sum+=i;
+			}
+			r.add(new Integer(sum));
+			if(lock!=null)
+				lock.countDown();
+			for(int i=0;i<2;i++){
+				System.out.println("i am stilll running.......");
+			}
+		}
+	} 
+	
+	/**
+	 * 可以看出，线程不会自动退出
+	 */
+	public  void testThreadReentrant(){
+		final ReentrantLock lock = new ReentrantLock();
+		Thread thread = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+//				TestThreadReentrant tester = new TestThreadReentrant();
+//				tester.doSomething();
+				int i =100,j=0;
+				long start = System.currentTimeMillis();
+//				synchronized(this){
+//					while(System.currentTimeMillis()<(start+2000)){
+//						j++;
+//						try {
+//							System.out.println("......."+j);
+//						} catch (Exception e) {
+//							e.printStackTrace();
+//							return;
+//						}
+//					}
+//					
+//				}
+				
+				try {
+					lock.lockInterruptibly();
+					
+					while(System.currentTimeMillis()<(start+2000)){
+						j++;
+						try {
+							System.out.println("......."+j);
+						} catch (Exception e) {
+							e.printStackTrace();
+							return;
+						}
+					}
+					
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}finally{
+					lock.unlock();
+				}
+			}
+		});
+		thread.start();
+		
+		try {
+			Thread.sleep(100);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
+		thread.interrupt();
+	}
+	
+	/**
+	 * 两个线程间歇性的输出1，2，1，2
+	 */
+	public void testFunWitchThread(){
+		final Object lock = new Object();
+		Thread t1 = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				synchronized(lock){
+					while(true){
+						lock.notifyAll();
+						try {
+							lock.wait();
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						System.out.println("1");
+					}
+				}
+				
+			}
+		});
+		
+		Thread t2 = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				synchronized(lock){
+					while(true){
+						lock.notifyAll();
+						try {
+							lock.wait();
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						System.out.println("2");
+					}
+					
+				}
+		}});
+		
+		t1.start();
+		try {
+			t1.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		t2.start();
+	}
+	
+	//---------------------------------------------------------------------------
+	//---------------------------------------------------------------------------
 }
