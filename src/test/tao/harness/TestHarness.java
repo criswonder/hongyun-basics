@@ -12,7 +12,11 @@ import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 import java.util.zip.Adler32;
 
+import test.webview.TestWebView;
 import android.app.ListActivity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -35,8 +39,10 @@ import android.taobao.imagebinder.ImageBinder;
 import android.taobao.imagebinder.ImagePoolBinder;
 import android.util.Log;
 import android.util.SparseBooleanArray;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.webkit.CookieManager;
@@ -80,6 +86,12 @@ public class TestHarness extends ListActivity {
 		reflectionCallTestMethods();
 	}
 
+ 
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		System.out.println(keyCode+"");
+		return super.onKeyDown(keyCode, event);
+	}
 	private void reflectionCallTestMethods() {
 		// setContentView(R.layout.testharness);
 		Class thisClass;
@@ -565,5 +577,45 @@ public class TestHarness extends ListActivity {
 		} catch (NameNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void testSamsungInputMethod(){
+		mMainViewGroup.removeAllViews();
+		
+		WebView webView = new WebView(getApplicationContext());
+		webView.getSettings().setJavaScriptEnabled(true);
+		
+		webView.loadUrl("http://m.baidu.com");
+//		webView.loadUrl("http://m.taobao.com");
+		
+		mMainViewGroup.addView(webView);
+		
+		webView.setOnKeyListener(new OnKeyListener() {
+			
+			@Override
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				System.out.println(""+keyCode);
+				return false;
+			}
+		});
+	}
+	
+	public void testNotification(){
+		Intent it = new Intent(getApplicationContext(), TestWebView.class);
+		PendingIntent pi = PendingIntent.getActivity(getApplicationContext(),0, it, 0);
+		NotificationManager nm = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+	    Notification.Builder builder = new Notification.Builder(
+	    		getApplicationContext());
+		//	2.设置主要信息
+		builder.setContentTitle("未读信息");						//设置内容题目
+		builder.setContentText("您有10封未读短信!");	//设置内容文本信息
+		builder.setSmallIcon(R.drawable.tao_white_40_mag_icon);			//设置小图标
+		builder.setContentInfo(String.valueOf(10)+"M");		//设置内容info
+		builder.setTicker("您有未读短信！");							//对应的Notification对象create时，以消息在标题栏提示
+		builder.setWhen(System.currentTimeMillis());			//设置时间
+		builder.setAutoCancel(true);							//默认点击对应的notification对象后，该对象消失
+		builder.setContentIntent(pi);
+	    
+	    nm.notify(1,builder.build());
 	}
 }
