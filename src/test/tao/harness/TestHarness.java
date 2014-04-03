@@ -24,6 +24,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.net.wifi.WifiInfo;
@@ -40,9 +41,11 @@ import android.taobao.imagebinder.ImagePoolBinder;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.webkit.CookieManager;
@@ -52,6 +55,8 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -617,5 +622,46 @@ public class TestHarness extends ListActivity {
 		builder.setContentIntent(pi);
 	    
 	    nm.notify(1,builder.build());
+	}
+	
+	/**
+	 * 通过测试发现，在onTouch的过程中，如果按下power键灭屏，则会收到cancel事件
+	 */
+	public void testTouchEventWhenPressPowerKey(){
+		LinearLayout ll = new LinearLayout(this, null);
+		ll.setBackgroundColor(Color.RED);
+		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+
+		ll.setFocusableInTouchMode(true);
+		ll.setFocusable(true);
+		ll.setClickable(true);
+		
+		ll.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				
+				switch(event.getAction()){
+				case MotionEvent.ACTION_DOWN:
+					Log.e("touch", "MotionEvent.ACTION_DOWN");
+				case MotionEvent.ACTION_MOVE:
+					Log.e("touch", "MotionEvent.ACTION_MOVE");
+				case MotionEvent.ACTION_UP:
+					Log.e("touch", "MotionEvent.ACTION_UP");
+				case MotionEvent.ACTION_CANCEL:
+					Log.e("touch", "MotionEvent.ACTION_CANCEL");
+				}
+				return false;
+			}
+		});
+		ll.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Log.e("click", ""+ v);
+			}
+		});
+		
+		mMainViewGroup.addView(ll,params);
 	}
 }
