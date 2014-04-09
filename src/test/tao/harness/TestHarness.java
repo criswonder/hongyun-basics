@@ -8,37 +8,32 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.concurrent.BrokenBarrierException;
-import java.util.concurrent.CyclicBarrier;
-import java.util.zip.Adler32;
-
-import test.webview.TestWebView;
-import android.app.ListActivity;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 import java.util.Vector;
+import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.zip.Adler32;
 
 import android.app.ListActivity;
+import android.content.ComponentName;
 import android.content.Context;
-import android.content.SyncResult;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Rect;
+import android.graphics.Region.Op;
 import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
-import android.graphics.Region.Op;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -51,11 +46,8 @@ import android.taobao.imagebinder.ImagePoolBinder;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnKeyListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.Window;
@@ -67,8 +59,6 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -78,7 +68,6 @@ import android.widget.Toast;
 import com.example.hongyunbasic.R;
 import com.taobao.tao.imagepool.ImageCache;
 import com.taobao.tao.imagepool.ImageGroup;
-import com.xixi.cache.DiskLruCache.Snapshot;
 
 public class TestHarness extends ListActivity {
 	ListView listView;
@@ -876,7 +865,5 @@ public class TestHarness extends ListActivity {
 	public void testChangeStaticValue(){
 		TestStaticProperty.StaticValue =12;
 		Log.e("StaticValue", TestStaticProperty.StaticValue+"");
-	}
-}
 	}
 }
