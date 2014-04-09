@@ -12,7 +12,11 @@ import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 import java.util.zip.Adler32;
 
+import test.webview.TestWebView;
 import android.app.ListActivity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -30,10 +34,6 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.SyncResult;
 import android.database.Cursor;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.net.wifi.WifiInfo;
@@ -50,8 +50,12 @@ import android.taobao.imagebinder.ImageBinder;
 import android.taobao.imagebinder.ImagePoolBinder;
 import android.util.Log;
 import android.util.SparseBooleanArray;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.Window;
@@ -63,6 +67,8 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -105,6 +111,12 @@ public class TestHarness extends ListActivity {
 		Log.e("StaticValue", TestStaticProperty.StaticValue+"");
 	}
 
+ 
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		System.out.println(keyCode+"");
+		return super.onKeyDown(keyCode, event);
+	}
 	private void reflectionCallTestMethods() {
 		// setContentView(R.layout.testharness);
 		Class thisClass;
@@ -864,5 +876,7 @@ public class TestHarness extends ListActivity {
 	public void testChangeStaticValue(){
 		TestStaticProperty.StaticValue =12;
 		Log.e("StaticValue", TestStaticProperty.StaticValue+"");
+	}
+}
 	}
 }

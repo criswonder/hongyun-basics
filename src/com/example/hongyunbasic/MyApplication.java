@@ -35,19 +35,25 @@ public class MyApplication extends Application {
 				
 				@Override
 				public void onReceive(Context context, Intent intent) {
-					if(intent!=null && intent.getComponent()!=null){
-						Log.d("deviceNote3", "deviceNote3 receive action"+intent.getScheme()+
-								" componentClassName"+intent.getComponent().getClassName()+
-								" componentPackageName"+intent.getComponent().getPackageName()
-								);
-						if(intent.getExtras()!=null && intent.getExtras().keySet()!=null){
-							StringBuilder sb = new StringBuilder();
-							for(String key:intent.getExtras().keySet()){
-								sb.append(key).append("=").append(intent.getExtras().get(key)).append(",");
-							}
-							sb.deleteCharAt(sb.length()-1);
-							Log.d("deviceNote3", "extras is="+sb.toString());
-						}
+					if("com.taobao.taobao".equalsIgnoreCase(intent.getPackage() )){
+						System.out.println("fuck");
+					}
+					if(intent!=null && intent.getData()!=null 
+					&& "com.taobao.taobao".equalsIgnoreCase(intent.getData().getSchemeSpecificPart())){
+//						Log.d("deviceNote3", "deviceNote3 receive action"+intent.getScheme()+
+//								" componentClassName"+intent.getComponent().getClassName()+
+//								" componentPackageName"+intent.getComponent().getPackageName()
+//								);
+//						if(intent.getExtras()!=null && intent.getExtras().keySet()!=null){
+//							StringBuilder sb = new StringBuilder();
+//							for(String key:intent.getExtras().keySet()){
+//								sb.append(key).append("=").append(intent.getExtras().get(key)).append(",");
+//							}
+//							sb.deleteCharAt(sb.length()-1);
+//							Log.d("deviceNote3", "extras is="+sb.toString());
+//						}
+						
+						System.out.println("fuck");
 					}else{
 						Log.d("deviceNote3", "null intent");
 					}
