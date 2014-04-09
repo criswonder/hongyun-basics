@@ -101,6 +101,8 @@ public class TestHarness extends ListActivity {
 		
 		mMainViewGroup = (ViewGroup) findViewById(R.id.main);
 		reflectionCallTestMethods();
+		
+		Log.e("StaticValue", TestStaticProperty.StaticValue+"");
 	}
 
 	private void reflectionCallTestMethods() {
@@ -773,18 +775,18 @@ public class TestHarness extends ListActivity {
 				try {
 					lock.lockInterruptibly();
 					
-					while(System.currentTimeMillis()<(start+2000)){
+					while(System.currentTimeMillis()<(start+3000)){
 						j++;
-						try {
-							System.out.println("......."+j);
-						} catch (Exception e) {
-							e.printStackTrace();
-							return;
-						}
+						System.out.println("xxxxxxxxxxxx");
+//						try {
+//							Thread.sleep(100);
+//						} catch (Exception e) {
+//							Log.e(TAG, "error in sleep",e);
+//						}
 					}
 					
 				} catch (InterruptedException e) {
-					e.printStackTrace();
+					Log.e(TAG, "error in lock",e);
 				}finally{
 					lock.unlock();
 				}
@@ -793,10 +795,9 @@ public class TestHarness extends ListActivity {
 		thread.start();
 		
 		try {
-			Thread.sleep(100);
+			Thread.sleep(500);
 		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
+			Log.e(TAG, "error in sleep2",e);
 		}
 		
 		thread.interrupt();
@@ -815,7 +816,9 @@ public class TestHarness extends ListActivity {
 					while(true){
 						lock.notifyAll();
 						try {
+							Log.e(TAG, "before lock wait()");
 							lock.wait();
+							Log.e(TAG, "after lock wait()");
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
@@ -845,14 +848,21 @@ public class TestHarness extends ListActivity {
 		}});
 		
 		t1.start();
-		try {
-			t1.join();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			Log.e(TAG, "before join()");
+//			t1.join();
+//			Log.e(TAG, "after join()");
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
 		t2.start();
 	}
 	
 	//---------------------------------------------------------------------------
 	//---------------------------------------------------------------------------
+
+	public void testChangeStaticValue(){
+		TestStaticProperty.StaticValue =12;
+		Log.e("StaticValue", TestStaticProperty.StaticValue+"");
+	}
 }
