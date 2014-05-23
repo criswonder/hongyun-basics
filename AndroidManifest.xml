@@ -9,15 +9,14 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.BROADCAST_PACKAGE_REMOVED" />
 
     <uses-sdk
         android:minSdkVersion="7"
         android:targetSdkVersion="15" />
 
     <application
-        android:icon="@drawable/ic_launcher"
         android:name=".MyApplication"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
@@ -37,58 +36,69 @@
 
                 <category android:name="android.intent.category.SAMPLE_CODE1" />
             </intent-filter>
+            <intent-filter>  
+			    <action android:name="android.intent.action.VIEW"/>  
+			    <category android:name="android.intent.category.DEFAULT" />  
+			    <category android:name="android.intent.category.BROWSABLE" />  
+			    <data android:scheme="myapp" android:host="www.w3fools.com"/>  
+			</intent-filter>
         </activity>
-        
+
         <!-- ===========================================测试animation方法============================================= -->
-<!--         <activity -->
-<!--             android:name="test.animation.TestAnimation" -->
-<!--             android:label="test_animation" > -->
-<!--             <intent-filter> -->
-<!--                 <action android:name="android.intent.action.MAIN" /> -->
+        <!-- <activity -->
+        <!-- android:name="test.animation.TestAnimation" -->
+        <!-- android:label="test_animation" > -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.MAIN" /> -->
 
-<!--                 <category android:name="android.intent.category.SAMPLE_CODE1" /> -->
-<!--             </intent-filter> -->
-<!--         </activity> -->
-<!--         <activity -->
-<!--             android:name="test.animation.TestAnimation1" -->
-<!--             android:label="test_animation" > -->
-<!--         </activity> -->
-<!--         <activity -->
-<!--             android:name="test.animation.TestAnimation2" -->
-<!--             android:label="test_animation" > -->
-<!--             <intent-filter> -->
-<!--                 <action android:name="android.intent.action.MAIN" /> -->
 
-<!--                 <category android:name="android.intent.category.SAMPLE_CODE1" /> -->
-<!--             </intent-filter> -->
-<!--         </activity> -->
-<!--         <activity -->
-<!--             android:name="test.animation.TestTranslateAnimation" -->
-<!--             android:label="test_animation" > -->
-<!--             <intent-filter> -->
-<!--                 <action android:name="android.intent.action.MAIN" /> -->
+        <!-- <category android:name="android.intent.category.SAMPLE_CODE1" /> -->
+        <!-- </intent-filter> -->
+        <!-- </activity> -->
+        <!-- <activity -->
+        <!-- android:name="test.animation.TestAnimation1" -->
+        <!-- android:label="test_animation" > -->
+        <!-- </activity> -->
+        <!-- <activity -->
+        <!-- android:name="test.animation.TestAnimation2" -->
+        <!-- android:label="test_animation" > -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.MAIN" /> -->
 
-<!--                 <category android:name="android.intent.category.SAMPLE_CODE1" /> -->
-<!--             </intent-filter> -->
-<!--         </activity> -->
-<!--         <activity -->
-<!--             android:name="test.animation.TestAnimation3" -->
-<!--             android:label="test_animation" > -->
-<!--             <intent-filter> -->
-<!--                 <action android:name="android.intent.action.MAIN" /> -->
 
-<!--                 <category android:name="android.intent.category.SAMPLE_CODE1" /> -->
-<!--             </intent-filter> -->
-<!--         </activity> -->
-<!--         <activity -->
-<!--             android:name="test.animation.TestAnimation4" -->
-<!--             android:label="test_animation" > -->
-<!--             <intent-filter> -->
-<!--                 <action android:name="android.intent.action.MAIN" /> -->
+        <!-- <category android:name="android.intent.category.SAMPLE_CODE1" /> -->
+        <!-- </intent-filter> -->
+        <!-- </activity> -->
+        <!-- <activity -->
+        <!-- android:name="test.animation.TestTranslateAnimation" -->
+        <!-- android:label="test_animation" > -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.MAIN" /> -->
 
-<!--                 <category android:name="android.intent.category.SAMPLE_CODE1" /> -->
-<!--             </intent-filter> -->
-<!--         </activity> -->
+
+        <!-- <category android:name="android.intent.category.SAMPLE_CODE1" /> -->
+        <!-- </intent-filter> -->
+        <!-- </activity> -->
+        <!-- <activity -->
+        <!-- android:name="test.animation.TestAnimation3" -->
+        <!-- android:label="test_animation" > -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+        <!-- <category android:name="android.intent.category.SAMPLE_CODE1" /> -->
+        <!-- </intent-filter> -->
+        <!-- </activity> -->
+        <!-- <activity -->
+        <!-- android:name="test.animation.TestAnimation4" -->
+        <!-- android:label="test_animation" > -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+        <!-- <category android:name="android.intent.category.SAMPLE_CODE1" /> -->
+        <!-- </intent-filter> -->
+        <!-- </activity> -->
         <!-- ===========================================测试OnDraw方法============================================= -->
         <activity
             android:name="test.ondraw.TestSaveAndRestore"
@@ -129,11 +139,13 @@
         <activity
             android:name="test.tabactivity.BottomTabActivity"
             android:label="test.tabactivity.BottomTabActivity" >
-<!--             <intent-filter> -->
-<!--                 <action android:name="android.intent.action.MAIN" /> -->
 
-<!--                 <category android:name="android.intent.category.LAUNCHER" /> -->
-<!--             </intent-filter> -->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name="test.scrolllayout.VerticalScrollBounceViewTest"
@@ -261,7 +273,6 @@
                 <category android:name="android.intent.category.SAMPLE_CODE1" />
             </intent-filter>
         </activity>
-        
         <activity
             android:name="test.tao.startactivity.TestStartActivityForResult"
             android:label="TestStartActivityForResult" >
@@ -292,25 +303,60 @@
         <activity
             android:name="test.webview.TestWebView"
             android:label="测试webview" >
-           <!--  <intent-filter>
+
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter> -->
+            </intent-filter>
+            -->
         </activity>
         <activity
             android:name="test.datepicker.TestDatePicker"
             android:label="datepicker" >
-           <intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.SAMPLE_CODE1" />
             </intent-filter>
         </activity>
+        <!-- :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
+        <!-- ::::::::::::::::::::::::::::4月份:::::::::::::::::::::::::::::::::::::::::: -->
+        <!-- :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
+        <!-- :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
+        <activity
+            android:name="test.tao.harness.Test4April"
+            android:label="test" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-        <receiver android:name="test.broadcastreceiver.BootReceiver"
-            android:enabled="false"
-             >
+                <category android:name="android.intent.category.SAMPLE_CODE1" />
+            </intent-filter>
+        </activity>
+        <!-- :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
+        <!-- ::::::::::::::::::::::::::::5月份:::::::::::::::::::::::::::::::::::::::::: -->
+        <!-- :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
+        <!-- ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+         -->
+        <activity
+            android:name="test.tao.harness.Test5May"
+            android:label="test" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.SAMPLE_CODE1" />
+                <action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.Monkey" />
+            </intent-filter>
+             <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.MONKEY" />
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name="test.broadcastreceiver.BootReceiver"
+            android:enabled="false" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" >
                 </action>
@@ -324,8 +370,13 @@
                 </action>
             </intent-filter>
         </receiver>
-         <receiver android:enabled="true" android:label="w_hongyun" android:name="com.example.hongyunbasic.WidgetMy">
-            <meta-data android:name="android.appwidget.provider" android:resource="@xml/weitao_appwidget">
+        <receiver
+            android:name="com.example.hongyunbasic.WidgetMy"
+            android:enabled="true"
+            android:label="w_hongyun" >
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/weitao_appwidget" >
             </meta-data>
 
             <intent-filter>
@@ -342,6 +393,107 @@
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
         </receiver>
+        <activity 
+            android:name="test.tao.harness.TestIntentFilter"
+            android:label="fkkk"
+            android:exported="true"
+            >
+            <intent-filter>
+				<category android:name="android.intent.category.DEFAULT" />
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.BROWSABLE"/>
+<!-- 				<data android:path="/shop/shop_info.htm" /> -->
+				<data android:scheme="http" android:host="shop.m.taobao.com" android:path="/shop/shop_index.htm" />
+<!-- 				<data android:scheme="http" android:host="shop.m.taobao.com" /> -->
+				<data android:scheme="taobao" />
+<!-- 				<data android:scheme="itaobao" /> -->
+            </intent-filter>
+              <intent-filter>
+		        <action android:name="android.intent.action.VIEW"/>
+		        <category android:name="android.intent.category.DEFAULT"/>
+		        <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="http" android:host="detail.tmall.com" android:path="/item.htm" />
+                <data android:scheme="taobao" />
+            </intent-filter>
+            <intent-filter>
+		        <action android:name="android.intent.action.VIEW"/>
+		        <category android:name="android.intent.category.DEFAULT"/>
+		        <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="http" android:host="item.taobao.com" android:path="/item.htm" />
+                <data android:host="item.tmall.com" />
+                <data android:scheme="taobao" />
+            </intent-filter>
+
+            <intent-filter>
+		        <action android:name="android.intent.action.VIEW"/>
+		        <category android:name="android.intent.category.DEFAULT"/>
+		        <category android:name="android.intent.category.BROWSABLE"/>
+
+		        <data android:scheme="http" android:host="a.m.taobao.com" android:pathPattern="/i.*\\.htm" />
+                <data android:host="a.m.tmall.com" />
+				<data android:scheme="itaobao" />
+                <data android:scheme="taobao" />
+             </intent-filter>
+             <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="http" android:host="h5.m.taobao.com" android:path="/awp/core/detail.htm" />
+                <data android:scheme="taobao" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="http" android:host="reader.taobao.com" android:path="/book/detail.htm" />
+            </intent-filter>
+            
+                        <intent-filter>
+				<category android:name="android.intent.category.DEFAULT" />
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.BROWSABLE"/>
+				<data android:scheme="http" android:host="shop.m.taobao.com" android:path="/shop/shop_index.htm" />
+				<data android:path="/shop/shop_info.htm" />
+				<data android:scheme="taobao" />
+				<data android:scheme="itaobao" />
+            </intent-filter>
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.VIEW" />
+		        <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="http" android:host="store.taobao.com" android:path="/shop/viewShop.htm" />
+            </intent-filter>
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.VIEW" />
+		        <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:scheme="http" android:host="h5.m.taobao.com" android:path="/awp/core/shop.htm" />
+		        <data android:scheme="taobao" />
+            </intent-filter>
+        </activity>
+        
+        
+         <receiver
+            android:name="test.tao.harness.CalendarAlarmReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.taobao.calendar.sdk.alarm.PLAY" />
+                <action android:name="com.taobao.calendar.sdk.alarm.RESET" />
+                <action android:name="com.taobao.calendar.sdk.alarm.STOP" />
+                <action android:name="com.taobao.calendar.sdk.alarm.KILL" />
+                <action android:name="com.taobao.calendar.sdk.alarm.TIMEOUT" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.LOCALE_CHANGED" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+        <service 
+            android:name="test.tao.harness.ExternalBindService"
+            android:process=":external"
+            android:exported="true"
+            ></service>
     </application>
 
 </manifest>

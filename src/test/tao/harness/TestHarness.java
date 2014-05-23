@@ -3,11 +3,8 @@ package test.tao.harness;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
 import java.util.Vector;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CountDownLatch;
@@ -17,10 +14,10 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.zip.Adler32;
 
-import android.app.ListActivity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -36,19 +33,19 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
+import android.os.Messenger;
+import android.os.RemoteException;
 import android.os.StrictMode;
 import android.provider.Contacts.People;
 import android.provider.ContactsContract;
 import android.taobao.imagebinder.ImageBinder;
 import android.taobao.imagebinder.ImagePoolBinder;
 import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.Window;
 import android.view.WindowManager;
@@ -56,8 +53,6 @@ import android.webkit.CookieManager;
 import android.webkit.WebView;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -69,118 +64,82 @@ import com.example.hongyunbasic.R;
 import com.taobao.tao.imagepool.ImageCache;
 import com.taobao.tao.imagepool.ImageGroup;
 
-public class TestHarness extends ListActivity {
+public class TestHarness extends TestBaseActivity {
 	ListView listView;
 	private View header;
 	private TextView floatingHead;
 	private Rect mVisibleRect = new Rect();
 	private int mFloatingCategoryHeight;
 	protected String TAG = "TestHarness";
-	private ViewGroup mMainViewGroup;
-	private static String[] GENRES = new String[] { "Action", "Adventure",
-			"Animation", "Children", "Comedy", "Documentary", "Drama",
-			"Foreign", "History", "Independent", "Romance", "Sci-Fi",
-			"Television", "Thriller" };
-	private static final String TEST_PREFIX = "test";
-	private ArrayList<String> mMethodNames = new ArrayList<String>();
+	 
 	private final int REQUEST_CODE_CONTACTS = 12;
+	
+    Messenger mService;
+    boolean mBound = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-	    getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
-	                            WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		super.onCreate(savedInstanceState);
 	    
-		setContentView(R.layout.testharness);
 		
-		mMainViewGroup = (ViewGroup) findViewById(R.id.main);
-		reflectionCallTestMethods();
+		super.reflectionCallTestMethods();
 		
 		Log.e("StaticValue", TestStaticProperty.StaticValue+"");
+		
+		Intent intent = new Intent(this, ExternalBindService.class);
+        bindService(intent, mConnection, 0);
 	}
+    /** Defines callbacks for service binding, passed to bindService() */
+    private ServiceConnection mConnection = new ServiceConnection() {
 
- 
+        @Override
+        public void onServiceConnected(ComponentName className,
+                IBinder service) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+//            LocalBinder binder = (LocalBinder) service;
+//            mService = binder.getService();
+//            mBound = true;
+        	
+        	 mService = new Messenger(service);
+             mBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            mBound = false;
+        }
+    };
+    
+    public void testRemoteService(){
+		if (mBound) {
+            // Call a method from the LocalService.
+            // However, if this call were something that might hang, then this request should
+            // occur in a separate thread to avoid slowing down the activity performance.
+			try {
+				Message msg = Message.obtain();
+				msg.what = 1;
+				mService.send(msg);
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+        }else{
+        	Toast.makeText(this, "failed to bound", Toast.LENGTH_SHORT).show();
+        }
+	}
+    public void testRemoteService2(){
+    	Intent i = new Intent(this, ExternalBindService.class);
+    	startService(i);
+    }
+    
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		System.out.println(keyCode+"");
 		return super.onKeyDown(keyCode, event);
 	}
-	private void reflectionCallTestMethods() {
-		// setContentView(R.layout.testharness);
-		Class thisClass;
-		try {
-			thisClass = Class.forName("test.tao.harness.TestHarness");
-			Method[] methods = thisClass.getMethods();
-			Method m;
-			for (int i = 0; i < methods.length; i++) {
-				m = methods[i];
-				Log.d(TAG, m.getName());
-				if (m.getName().toLowerCase().startsWith(TEST_PREFIX)) {
-					mMethodNames.add(m.getName());
-				}
-			}
-
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-
-		GENRES = mMethodNames.toArray(new String[mMethodNames.size()]);
-		System.out.println(GENRES);
-
-		setListAdapter(new ArrayAdapter<String>(this,
-				android.R.layout.simple_list_item_multiple_choice, GENRES));
-
-		final ListView listView = getListView();
-
-		listView.setItemsCanFocus(false);
-		listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-
-		Button runBtn = (Button) findViewById(R.id.btn_run);
-		runBtn.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				SparseBooleanArray checked = listView.getCheckedItemPositions();
-				for (int i = 0; i < GENRES.length; i++)
-					if (checked.get(i)) {
-						int pos = i;
-						if (pos >= 0 && pos < GENRES.length) {
-							runMethod(GENRES[pos]);
-						} else {
-							Toast.makeText(getApplicationContext(),
-									"bad pos number", Toast.LENGTH_SHORT)
-									.show();
-						}
-					}
-			}
-		});
-	}
-
-	/**
-	 * @param string
-	 */
-	protected void runMethod(String string) {
-		try {
-			Method method = this.getClass().getDeclaredMethod(string, null);
-			try {
-				method.invoke(this, null);
-			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InvocationTargetException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} catch (NoSuchMethodException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+	 
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -866,4 +825,37 @@ public class TestHarness extends ListActivity {
 		TestStaticProperty.StaticValue =12;
 		Log.e("StaticValue", TestStaticProperty.StaticValue+"");
 	}
+	
+	public void testSendIntent1(){
+		Intent o =  new Intent("android.intent.action.VIEW");
+		o.addCategory(Intent.CATEGORY_BROWSABLE);
+		Uri uri = Uri.parse("taobao://fk.com");
+		o.setData(uri);
+		startActivity(o);
+	}
+	public void testSendIntent2(){
+		Intent o =  new Intent("android.intent.action.VIEW");
+		o.addCategory(Intent.CATEGORY_BROWSABLE);
+		Uri uri = Uri.parse("fk://shop.m.taobao.com/shop/shop_info.htm");
+		o.setData(uri);
+		startActivity(o);
+	}
+	public void testSendIntent3(){
+		Intent o =  new Intent("android.intent.action.VIEW");
+		o.addCategory(Intent.CATEGORY_BROWSABLE);
+		Uri uri = Uri.parse("http://shop.m.taobao.com/shop/shop_index.htm?spm=0.0.0.0&shop_id=68732867");
+		o.setData(uri);
+		startActivity(o);
+	}
+	
+	public void testBrowserBackToApp(){
+//		Intent o =  new Intent("android.intent.action.VIEW");
+//		o.addCategory(Intent.CATEGORY_BROWSABLE);
+//		o.
+//		Uri uri = Uri.parse("http://shop.m.taobao.com/shop/shop_index.htm?spm=0.0.0.0&shop_id=68732867");
+//		o.setData(uri);
+//		startActivity(o);
+	}
+	
+	
 }
