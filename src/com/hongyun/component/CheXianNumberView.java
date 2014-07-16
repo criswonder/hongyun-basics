@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.xixi.R;
@@ -33,6 +34,13 @@ public class CheXianNumberView extends View {
 	public CheXianNumberView(Context context) {
 		super(context);
 	}
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		// TODO Auto-generated method stub
+		return super.onTouchEvent(event);
+	}
+	
+	
 	public CheXianNumberView(Context context, AttributeSet attrs){
 		super(context,attrs);
 		if(attrs!=null){

@@ -49,7 +49,11 @@ public class CoverFlow extends FrameLayout {
 		//
 		init();
 	}
-
+	@Override
+	public boolean onInterceptTouchEvent(MotionEvent ev) {
+		// TODO Auto-generated method stub
+		return super.onInterceptTouchEvent(ev);
+	}
 	// --------------------------------------------------------------------------------------------------------------------------------------------------------------->
 	// <--------------------------------------------------------------------------------------------------------------------------------------------------------------
 	private View mContainer;

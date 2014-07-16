@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="app_defaultsize_w">630.0dip</dimen>
+	<dimen name="app_defaultsize_h">400.0dip</dimen>
+	<dimen name="app_minimumsize_w">200.0dip</dimen>
+	<dimen name="app_minimumsize_h">200.0dip</dimen>
+	
     <dimen name="dimen_1_dip">1.0dip</dimen>
     <dimen name="dimen_2_dip">2.0dip</dimen>
     <dimen name="dimen_3_dip">3.0dip</dimen>
