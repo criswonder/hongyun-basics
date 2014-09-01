@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/layout2"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:padding="0dp" >
+
+        <TextView
+            android:id="@+id/priceminText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="16dp"
+            android:text="最低价格" />
+
+        <TextView
+            android:id="@+id/priceminEditTextYuan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="22dp"
+            android:layout_marginTop="16dp"
+            android:text="元" />
+
+        <EditText
+            android:id="@+id/priceminEditText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toLeftOf="@id/priceminEditTextYuan"
+            android:layout_toRightOf="@id/priceminText"
+            android:gravity="right"
+            android:imeOptions="actionNext"
+            android:maxLength="10"
+            android:numeric="integer"
+            android:padding="5dp" />
+
+        <TextView
+            android:id="@+id/abc"
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:layout_below="@id/priceminEditText"
+            android:layout_marginLeft="1px"
+            android:layout_marginRight="1px"
+            android:layout_marginTop="8dp"
+            >
+        </TextView>
+
+        <TextView
+            android:id="@+id/pricemaxText2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/abc"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="16dp"
+            android:text="最高价格" />
+
+        <TextView
+            android:id="@+id/pricemaxEditTextYuan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/abc"
+            android:layout_marginRight="22dp"
+            android:layout_marginTop="16dp"
+            android:text="元" />
+
+        <EditText
+            android:id="@+id/pricemaxEditText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/abc"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toLeftOf="@id/pricemaxEditTextYuan"
+            android:layout_toRightOf="@id/pricemaxText2"
+            android:gravity="right"
+            android:imeOptions="actionDone"
+            android:maxLength="10"
+            android:numeric="integer"
+            android:padding="5dp"
+            android:singleLine="true" />
+
+        <TextView
+            android:id="@+id/abc2"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/pricemaxEditText"
+            android:layout_marginTop="10dp"
+            android:background="@color/transparent" >
+        </TextView>
+    </RelativeLayout>
+
+</LinearLayout>

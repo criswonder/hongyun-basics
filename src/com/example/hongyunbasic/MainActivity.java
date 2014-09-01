@@ -1,21 +1,23 @@
 package com.example.hongyunbasic;
 
-import android.os.Bundle;
-import android.app.Activity;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.view.Menu;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnHoverListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
 import com.xixi.android.MucangConfig;
 
@@ -55,6 +57,14 @@ public class MainActivity extends Activity {
 
 				Intent intent = (Intent) map.get("intent");
 				startActivity(intent);
+			}
+		});
+		listv.setOnHoverListener(new OnHoverListener() {
+			
+			@Override
+			public boolean onHover(View v, MotionEvent event) {
+				System.out.println("------onHover----");
+				return false;
 			}
 		});
 	}
