@@ -1,6 +1,6 @@
 package test.AsyncTask_HandlerThread;
 
-import com.example.hongyunbasic.R;
+import java.text.NumberFormat;
 
 import android.app.Activity;
 import android.content.Context;
@@ -16,7 +16,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
-import java.text.NumberFormat;
+import com.example.hongyunbasic.R;
 
 /**
  * 从0开始数到某个数，并显示完成的百分比, 一个使用AsyncTask, 一个使用handler

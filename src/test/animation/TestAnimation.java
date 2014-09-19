@@ -1,6 +1,5 @@
 package test.animation;
 
-import com.example.hongyunbasic.R;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +8,8 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
+
+import com.example.hongyunbasic.R;
 
 public class TestAnimation extends Activity implements OnClickListener {
 	public void onCreate(Bundle savedInstanceState) {

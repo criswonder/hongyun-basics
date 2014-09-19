@@ -1,13 +1,12 @@
 package test.progressDialog;
 
-import com.example.hongyunbasic.R;
-
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Looper;
+
+import com.example.hongyunbasic.R;
 
 /**
  * 让task在执行的时候显示loading，给用户一个提示

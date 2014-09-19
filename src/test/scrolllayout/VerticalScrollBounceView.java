@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.os.Parcel;
@@ -20,8 +19,6 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.LinearLayout;
 import android.widget.Scroller;
-
-import com.example.hongyunbasic.R;
 
 public class VerticalScrollBounceView extends ViewGroup {
 

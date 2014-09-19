@@ -1,6 +1,9 @@
 package test.animation;
 
-import com.example.hongyunbasic.R;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,7 +13,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.text.TextUtils.TruncateAt;
 import android.util.Log;
 import android.view.Gravity;
@@ -25,14 +27,10 @@ import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.ArrayList;
-import java.util.List;
+import com.example.hongyunbasic.R;
 
 public class TestAnimation2 extends Activity implements OnClickListener {
 	private static final String TAG = "mao";

@@ -1,7 +1,5 @@
 package test.animation;
 
-import com.example.hongyunbasic.R;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +7,8 @@ import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+
+import com.example.hongyunbasic.R;
 
 public class TestAnimation1 extends Activity implements OnClickListener {
 	public void onCreate(Bundle savedInstanceState) {

@@ -1,19 +1,9 @@
 package test.scrolllayout;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 //import cn.mucang.android.common.config.MucangConfig;
 //import cn.mucang.android.common.ui.PagingView;
-
-import com.example.hongyunbasic.R;
 
 /**
  * 测试mucang库中的PagingView 控件

@@ -6,8 +6,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -17,8 +15,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
-
-import com.example.hongyunbasic.R;
 
 public class TestWebView extends Activity {
 	@Override
@@ -86,7 +82,7 @@ public class TestWebView extends Activity {
 		
 		
 		   
-		startActivity(it);
+//		startActivity(it);
 //		webview.loadUrl("http://tb.cn/x/tm/?locate=icon-1&spm=a2141.1.1.icon-1&actparam=1_46784_h17639_%E5%85%A5%E5%8F%A3-%E5%A4%A9%E7%8C%AB");
 //		webview.loadUrl("http://h5.m.taobao.com/dd/index.htm?_ddid=carte/delivery/233448");
 		webview.setOnLongClickListener(new OnLongClickListener() {
@@ -97,18 +93,31 @@ public class TestWebView extends Activity {
 			}
 		});
 		
-		Intent intent = new Intent( "com.android.launcher.action.INSTALL_SHORTCUT");
-		BitmapDrawable bitmapDraw = (BitmapDrawable)getResources().getDrawable(R.drawable.ic_launcher);
-		Bitmap icon = bitmapDraw.getBitmap();
-		Intent shortcut = new Intent();
-		shortcut.setAction("com.taobao.huoyan.scan");
-		shortcut.addCategory("android.intent.category.DEFAULT");
-		intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcut); 
+//		Intent intent = new Intent( "com.android.launcher.action.INSTALL_SHORTCUT");
+//		BitmapDrawable bitmapDraw = (BitmapDrawable)getResources().getDrawable(R.drawable.ic_launcher);
+//		Bitmap icon = bitmapDraw.getBitmap();
+//		Intent shortcut = new Intent();
+//		shortcut.setAction("com.taobao.huoyan.scan");
+//		shortcut.addCategory("android.intent.category.DEFAULT");
+//		intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, shortcut); 
+//		
+//		intent.putExtra(Intent.EXTRA_SHORTCUT_NAME,"huoyan"); 
+//		intent.putExtra(Intent.EXTRA_SHORTCUT_ICON, icon);
+//		intent.putExtra("duplicate", false); 
+//		sendBroadcast(intent);
 		
-		intent.putExtra(Intent.EXTRA_SHORTCUT_NAME,"huoyan"); 
-		intent.putExtra(Intent.EXTRA_SHORTCUT_ICON, icon);
-		intent.putExtra("duplicate", false); 
-		sendBroadcast(intent);
+		
+		Intent openAlbumIntent = new Intent(Intent.ACTION_GET_CONTENT);
+		openAlbumIntent.setType("image/*");
+		this.startActivityForResult(openAlbumIntent, 11);
 	}
-
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		
+//		ChatImageManager cm = new ChatImageManager();
+	}
+	 
 }
