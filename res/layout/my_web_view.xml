@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ff183055"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/panel_top"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/dimen_44_dip"
+        android:background="@drawable/topbar_bg" >
+
+        <Button
+            android:id="@+id/top_back"
+            android:layout_width="@dimen/dimen_70_dip"
+            android:layout_height="@dimen/dimen_32_dip"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_10_dip"
+            android:background="@drawable/back_btn"
+            android:gravity="center"
+            android:text="退出"
+            android:textColor="#ffffffff"
+            android:textSize="@dimen/dimen_14_dip" />
+
+        <TextView
+            android:id="@+id/top_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="正在加载"
+            android:textColor="#ffffffff"
+            android:textSize="@dimen/dimen_18_dip" />
+
+        <ProgressBar
+            android:id="@+id/my_progress_bar"
+            android:layout_width="@dimen/dimen_32_dip"
+            android:layout_height="@dimen/dimen_32_dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dimen_10_dip"
+            android:indeterminate="true" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <WebView
+            android:id="@+id/web_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+
+        <LinearLayout
+            android:id="@+id/web_view_toolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_40_dip"
+            android:layout_gravity="bottom|left"
+            android:layout_marginBottom="@dimen/dimen_10_dip"
+            android:layout_marginLeft="@dimen/dimen_10_dip"
+            android:background="@drawable/site_bottombg"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dimen_10_dip"
+            android:paddingRight="@dimen/dimen_10_dip" >
+
+            <Button
+                android:id="@+id/web_view_btn_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/site_back_btn"
+                android:enabled="false" />
+
+            <Button
+                android:id="@+id/web_view_btn_refresh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_10_dip"
+                android:background="@drawable/site_stop_btn" />
+
+            <Button
+                android:id="@+id/web_view_btn_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_10_dip"
+                android:background="@drawable/site_next_btn"
+                android:enabled="false" />
+        </LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>

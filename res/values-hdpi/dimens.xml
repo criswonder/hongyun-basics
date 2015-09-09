@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <dimen name="textsize_dropdownrefresh_textsize">13sp</dimen>
+  <dimen name="marginleft_arrow">30px</dimen>
+  <dimen name="height_arrow">70px</dimen>
+  
+    <dimen name="login_et_width">280dp</dimen>
+    <dimen name="login_bt_width">270dp</dimen>
+    <dimen name="ht_cartype_detailpage_item_line">50dp</dimen>
+    <dimen name="ht_cartype_detailpage_item_line_icon">20dp</dimen>
+    <dimen name="ml_cartype_detailpage_item_line_icon">40dp</dimen>
+    <!-- ml = margin left -->
+
+    <dimen name="margin_czyy_center_icon">24px</dimen>
+    <dimen name="marginTop_czyy_center_icon1">17px</dimen>
+    <!-- ml = margin left -->
+    <dimen name="marginTop_czyy_center_icon">53px</dimen>
+    <dimen name="textsize_top_title_maintain_record">18px</dimen>
+    <dimen name="margin_bothside_inner">14px</dimen>
+    <dimen name="margin_bothside_outer">12px</dimen>
+    <dimen name="magintop_outer">6px</dimen>
+    <dimen name="textsize_date">24px</dimen>
+    <dimen name="textsize_item">28px</dimen>
+    <dimen name="marginleft_icon">18px</dimen>
+    <dimen name="marginleft_input_dangqiangonglishu">42px</dimen>
+    <dimen name="marginleft_date">16px</dimen>
+    <dimen name="marginleft_date_title">38px</dimen>
+    <dimen name="marginleft_dangqiangonglishu">24px</dimen>
+    <dimen name="marginleft_dangqiangonglishu_title">117px</dimen>
+    <dimen name="marginleft_orderbtn">18px</dimen>
+    <dimen name="height_maintainrecord_input_panel">121px</dimen>
+    <dimen name="width_maintainrecord_input">158px</dimen>
+    <dimen name="width_date">97px</dimen>
+    <dimen name="width_dangqianggonglishu">145px</dimen>
+    <dimen name="width_orderbtn">71px</dimen>
+
+    <!-- czxx -->
+    <dimen name="height_czxx_line">62px</dimen>
+    <dimen name="textsize_czxx_label">20px</dimen>
+    <dimen name="width_czxx_label">86px</dimen>
+    <!-- home page -->
+    <dimen name="huodong_image_top">253px</dimen>
+    <dimen name="textsize_homepage">20px</dimen>
+    <dimen name="height_homepage_first_line">206px</dimen>
+    <dimen name="marginleft_homepage_label">15px</dimen>
+    <dimen name="login_panel_margin_top">259px</dimen>
+    <dimen name="login_panel_hint_text_size">22sp</dimen>
+    <dimen name="login_panel_login_error_size">18sp</dimen>
+    <dimen name="login_panel_edittext_width">243dp</dimen>
+    <dimen name="login_panel_edittext_height">41dp</dimen>
+    <dimen name="login_panel_btn_width">254dp</dimen>
+    <dimen name="login_panel_btn_height">82dp</dimen>
+    <dimen name="login_panel_bottom_tipimage_width">248dp</dimen>
+    <dimen name="login_panel_bottom_tipimage_height">67dp</dimen>
+    <dimen name="margintop_login_txt_tips">38px</dimen>
+    <dimen name="margintop_login_btn">14px</dimen>
+    <dimen name="margintop_login_edittext">10px</dimen>
+    <!-- Top tool bar -->
+    <dimen name="dimen_48_dip">45dp</dimen>
+    <dimen name="dimen_34_dip">26dp</dimen>
+    <dimen name="text_size_radiobtn">13sp</dimen>
+
+    <!-- cartype page top shop show -->
+    <dimen name="height_video">72dp</dimen>
+    <dimen name="width_video">97dp</dimen>
+    <dimen name="width_btn_mv">34dp</dimen>
+    <dimen name="height_top_shopshow_title">10dp</dimen>
+    <dimen name="margintop_cartypelist_panel">8dp</dimen>
+    <dimen name="textsize_toptitle">7sp</dimen>
+    <dimen name="height_chexingzhanshi_label">22dp</dimen>
+    <dimen name="marginleft_chexingzhanshi_label">19dp</dimen>
+    <dimen name="width_cartypeitem_image103">69dp</dimen>
+    <dimen name="height_cartypeitem_image74">49dp</dimen>
+    <dimen name="marginleft_cartypeitem_image">16dp</dimen>
+    <dimen name="topimage_border">2dp</dimen>
+    <dimen name="topimage_gap">2dp</dimen>
+    <dimen name="margin_main">8dp</dimen>
+    <dimen name="textsize_topbar_title">19sp</dimen>
+    <dimen name="textsize_listitem">13sp</dimen>
+    <dimen name="textsize_radiobtn">11sp</dimen>
+
+    <!-- cartype detail page -->
+    <dimen name="width_top_bigimage">194px</dimen>
+    <dimen name="height_top_bigimage">137px</dimen>
+    <dimen name="marginleft_top_bigimage">7px</dimen>
+    <dimen name="gap_top_bigimage">10px</dimen>
+    <dimen name="height_darklabel">10px</dimen>
+    <dimen name="textsize_cartype_detail_topbigtext">18px</dimen>
+    <dimen name="textsize_cartype_detail_topcontent">14px</dimen>
+    <dimen name="margin_bothside">18px</dimen>
+    <dimen name="margintop_panel">18px</dimen>
+    <dimen name="textsize_listitem_cartype_detail">18px</dimen>
+
+    <!-- car type price page -->
+    <dimen name="textsize_cartype_price_item_title">28px</dimen>
+    <dimen name="textsize_cartype_price_item_content">24px</dimen>
+
+    <!-- car type image -->
+    <dimen name="width_cartype_image">194px</dimen>
+    <dimen name="height_cartype_image">137px</dimen>
+    <!--
+    <dimen name="margin_cartype_iamge">9px</dimen>
+    <dimen name="textsize_cartype_image_tab">30px</dimen>
+    -->
+    <dimen name="height_cartype_image_tab">30px</dimen>
+    <dimen name="padding_cartype_image_bothside">10px</dimen>
+    <dimen name="paddingtop_cartype_image">6px</dimen>
+    <dimen name="dimen34px">20px</dimen>
+    <dimen name="dimen27px">18px</dimen>
+
+    <!-- car type color -->
+    <dimen name="width_biggallery">409px</dimen>
+    <dimen name="height_biggallery">289px</dimen>
+    <dimen name="margin_biggallery">19px</dimen>
+    <dimen name="width_smallgallery">63px</dimen>
+    <dimen name="height_smallgallery">63px</dimen>
+    <dimen name="margintop_smallgallery">2px</dimen>
+    <dimen name="marginleft_smallgallery">44px</dimen>
+    <dimen name="gap_forsmallgallery">8px</dimen>
+
+</resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+
+    <color name="about_title_color">#ff0000</color>
+    <color name="about_left_text_color">#ff0000</color>
+    <color name="about_right_text_color">#ffff00</color>
+    <color name="about_bottom_text_color">#ff0000</color>
+    <color name="privacy_text_color">#dddddd</color>
+    <color name="zhinan_radio_n">#373737</color>
+    <color name="zhinan_radio_s">#FBDD00</color>
+    <color name="zhinan_topbtn">#DBDEE0</color>
+</resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+
+    <dimen name="about_version_margin_top">40dip</dimen>
+    <dimen name="about_logo_margin_top">20dip</dimen>
+    <dimen name="about_icon_margin_top">20dip</dimen>
+    <dimen name="chexian_main_panel_button_margin_top">10dip</dimen>
+	<dimen name="textsize_dropdownrefresh_textsize">12sp</dimen>
+</resources>

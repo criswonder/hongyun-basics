@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="CheXianNumberView">
+        <attr name="cellCount" format="integer" />
+        <attr name="duration" format="integer" />
+        <attr name="sleepTime" format="integer" />
+        <attr name="maxDistance" format="integer" />
+    </declare-styleable>
+
+</resources>

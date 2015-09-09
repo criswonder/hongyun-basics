@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+
+    <item name="main_bg" type="drawable">#2d5a8c</item>
+    <item type="drawable" name="common_list_bg">#ffd9e6f0</item>
+</resources>
