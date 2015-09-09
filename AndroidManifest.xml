@@ -181,15 +181,7 @@
                 <category android:name="android.intent.category.SAMPLE_CODE1" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="test.topimageswitchview.TestMyControl"
-            android:label="TopImageSwitchView" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.SAMPLE_CODE1" />
-            </intent-filter>
-        </activity>
         <activity
             android:name="test.photo.TakePhoto"
             android:label="TakePhoto" >
@@ -217,15 +209,7 @@
                 <category android:name="android.intent.category.SAMPLE_CODE1" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="test.touchlistener.TestTouchEvent"
-            android:label="TestTouchEvent" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.SAMPLE_CODE1" />
-            </intent-filter>
-        </activity>
         <activity
             android:name="test.drawn.DrawnDiagram"
             android:label="test.drawn.DrawnDiagram" >
@@ -377,7 +361,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="test.tao.harness.Test7July"
+            android:name="test.tao.harness.Test20150909"
             android:label="test" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
