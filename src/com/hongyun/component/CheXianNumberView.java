@@ -1,5 +1,8 @@
 package com.hongyun.component;
 
+import com.example.hongyunbasic.R;
+import com.xixi.utils.MiscUtil;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -9,9 +12,6 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-
-import com.xixi.R;
-import com.xixi.utils.MiscUtil;
 
 public class CheXianNumberView extends View {
 	private static final String TAG = "CheXianNumberView";

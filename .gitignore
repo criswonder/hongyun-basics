@@ -1,5 +1,10 @@
 /bin
+/.DS_Store
 /gen
 /.DS_Store
 /.classpath
 /project.properties
+/.idea
+/.gradle
+/build
+/gradle*
