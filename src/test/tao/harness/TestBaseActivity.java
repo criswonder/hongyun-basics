@@ -96,9 +96,9 @@ public class TestBaseActivity extends ListActivity {
 	 */
 	protected void runMethod(String string) {
 		try {
-			Method method = this.getClass().getDeclaredMethod(string, null);
+			Method method = this.getClass().getDeclaredMethod(string);
 			try {
-				method.invoke(this, null);
+				method.invoke(this);
 			} catch (IllegalArgumentException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
