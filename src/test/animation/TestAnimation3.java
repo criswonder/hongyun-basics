@@ -1,6 +1,12 @@
 package test.animation;
 
-import com.example.hongyunbasic.R;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Stack;
 
 import android.app.Activity;
 import android.content.Context;
@@ -31,13 +37,7 @@ import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Stack;
+import com.example.hongyunbasic.R;
 
 public class TestAnimation3 extends Activity implements OnClickListener {
 	private static final String TAG = "mao";

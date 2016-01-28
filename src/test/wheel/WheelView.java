@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import test.wheel.adapter.WheelViewAdapter;
-
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.graphics.Canvas;

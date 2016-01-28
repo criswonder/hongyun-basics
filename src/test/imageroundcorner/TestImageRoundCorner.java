@@ -3,6 +3,7 @@ package test.imageroundcorner;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.BitmapFactory.Options;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -12,6 +13,7 @@ import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.widget.ImageView;
 
@@ -26,9 +28,30 @@ public class TestImageRoundCorner extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_testimageroundcorner);
 		myImageView = (ImageView) findViewById(R.id.imageView1);
-		Bitmap photo = BitmapFactory.decodeResource(getResources(),
-				R.drawable.a);
-		myImageView.setImageBitmap(createFramedPhoto(500, 400, photo, 20));
+//		Bitmap photo = BitmapFactory.decodeResource(getResources(),
+//				R.drawable.a);
+		
+		Options options = new Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile("/storage/emulated/0/taobao/com.taobao.taobao/persist_images/1409577694239.png", options);
+        int dw = options.outWidth / 768;
+        int dh = options.outHeight /1024;
+        int scale = Math.max(dw, dh);
+        options = new Options();
+        options.inDensity = (int) 2;
+        options.inScaled = true;
+        options.inPurgeable = true;
+        
+        options.inSampleSize = scale==0?1:scale;
+        Log.d("andymao",String.format("dw=%d,dh=%d,scale=%d", dw,dh,scale));
+        Bitmap mBitmap = null;
+        try {
+            mBitmap = BitmapFactory.decodeFile("/storage/emulated/0/taobao/com.taobao.taobao/persist_images/1409577694239.png", options);
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+        
+		myImageView.setImageBitmap(mBitmap);
 		// myImageView.setImageBitmap(createStarPhoto(500,400,photo));
 	}
 
