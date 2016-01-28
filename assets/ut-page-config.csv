@@ -1,0 +1,2 @@
+_key,_iOSkey,_AndroidKey,_说明,_备注,_服务端打点,_spma,_spmb,_spmc,_spmd,_args,title,url,item_id,ju_id,order_id,spm-url,spm-cnt
+TMSplash,JUSplashViewController,SplashActivity,聚划算-闪屏,,,a240c,7662933,0,0,,,,{\d+},,,,

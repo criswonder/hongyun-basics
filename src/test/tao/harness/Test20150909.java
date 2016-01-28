@@ -15,12 +15,15 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
@@ -333,6 +336,85 @@ public class Test20150909 extends TestBaseActivity implements AdapterView.OnItem
 			startActivity(intent);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
+		}
+	}
+
+	//--------------------------------------------------------------------------------------------------
+	//Test build info
+	//--------------------------------------------------------------------------------------------------
+	public void testbuildinfo(){
+		StringBuilder sb = new StringBuilder();
+		sb.append(Build.MANUFACTURER);
+		String str = sb.toString();
+		Toast.makeText(this,str,Toast.LENGTH_LONG).show();
+	}
+
+
+	//--------------------------------------------------------------------------------------------------
+	//test for loop syncronized
+	//--------------------------------------------------------------------------------------------------
+	public void testSyncronizedOnForLoop(){
+		final CountDownLatch countDownLatch = new CountDownLatch(1);
+		SingleInstanceHolder.getIns().addThing("abc1");
+		for(int i=0;i<8;i++){
+			final int j = i;
+			SingleInstanceHolder.getIns().addThing("abc" + j);
+		}
+
+		Thread thread = new Thread(){
+			@Override
+			public void run()
+			{
+				super.run();
+				try {
+					countDownLatch.await();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+//				synchronized (SingleInstanceHolder.getIns().mArrayList){
+					SingleInstanceHolder.getIns().removeThing("abc1");
+//				}
+			}
+		};
+		thread.start();
+		synchronized (SingleInstanceHolder.getIns().mArrayList){
+			for(Object obj:SingleInstanceHolder.getIns().mArrayList){
+				Log.d(TAG,""+obj);
+				if(countDownLatch.getCount()>0){
+					countDownLatch.countDown();
+				}
+			}
+		}
+	}
+
+	public static class SingleInstanceHolder{
+		private List<String> mArrayList = new ArrayList<String>();
+//		private List<String> mArrayList = Collections.synchronizedList(new ArrayList<String>());
+		private static SingleInstanceHolder ins;
+
+		public static SingleInstanceHolder getIns()
+		{
+			if (ins == null) {
+				ins = new SingleInstanceHolder();
+			}
+			return ins;
+		}
+
+		private SingleInstanceHolder()
+		{
+		}
+
+		public void addThing(String add)
+		{
+			if (!mArrayList.contains(add)) {
+				mArrayList.add(add);
+			}
+		}
+
+		public void removeThing(String remove)
+		{
+			boolean res = mArrayList.remove(remove);
+			Log.d("andy", "remove result = " + res);
 		}
 	}
 }

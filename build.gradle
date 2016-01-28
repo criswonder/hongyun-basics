@@ -45,12 +45,12 @@ android {
     buildToolsVersion System.properties['buildToolsVersion']
 
     defaultConfig {
-        minSdkVersion 14
+        minSdkVersion 17
         targetSdkVersion Integer.parseInt(System.properties['compileSdkVersion'])
         versionCode Integer.parseInt(System.properties['versionCode'])
         versionName System.properties['versionName']
 
-        multiDexEnabled true
+//        multiDexEnabled true
     }
 
     signingConfigs {

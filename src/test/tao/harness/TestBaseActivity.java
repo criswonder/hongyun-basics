@@ -23,7 +23,7 @@ public class TestBaseActivity extends ListActivity {
 	private static final String TEST_PREFIX = "test";
 	private ArrayList<String> mMethodNames = new ArrayList<String>();
 
-	protected String TAG = "TestHarness";
+	public String TAG = "TestHarness";
 	protected ViewGroup mMainViewGroup;
 
 	@Override
